@@ -1,14 +1,13 @@
-// app/api/admin/user/[id]/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/utils/db';
 import { auth } from '@/auth';
 
 export async function DELETE(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
   const session = await auth();
+
   if (!session?.user?.email) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
