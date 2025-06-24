@@ -4,9 +4,8 @@ import { auth } from '@/auth';
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } }
-)
- {
+  { params }: { params: { id: string } }
+) {
   const session = await auth();
 
   if (!session?.user?.email) {
@@ -23,7 +22,7 @@ export async function DELETE(
 
   try {
     await prisma.user.delete({
-      where: { id: context.params.id },
+      where: { id: params.id },
     });
 
     return NextResponse.json({ success: true });
