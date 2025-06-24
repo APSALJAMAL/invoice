@@ -2,12 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/utils/db';
 import { auth } from '@/auth';
 
-export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
-  const session = await auth();
+// Explicitly define the type for the context parameter
+interface RouteContext {
+  params: { id: string };
+}
 
+export async function DELETE(req: NextRequest, { params }: RouteContext) {
+  const { id } = params;
+
+  const session = await auth();
   if (!session?.user?.email) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -22,7 +25,7 @@ export async function DELETE(
 
   try {
     await prisma.user.delete({
-      where: { id: context.params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });
