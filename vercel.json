@@ -1,0 +1,17 @@
+{
+  "build": {
+    "env": {
+      "ENABLE_EXPERIMENTAL_COREPACK": "1"
+    },
+    "scripts": {
+      "beforeBuild": "pnpm approve-builds --yes",
+      "allowed": [
+        "@prisma/client",
+        "@prisma/engines",
+        "core-js",
+        "prisma",
+        "sharp"
+      ]
+    }
+  }
+}
