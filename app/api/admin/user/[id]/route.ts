@@ -2,12 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/utils/db';
 import { auth } from '@/auth';
 
-// Explicitly define the type for the context parameter
-interface RouteContext {
-  params: { id: string };
-}
-
-export async function DELETE(req: NextRequest, { params }: RouteContext) {
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
   const session = await auth();
