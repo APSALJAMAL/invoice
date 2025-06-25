@@ -2,8 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/utils/db';
 import { auth } from '@/auth';
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+interface Context {
+  params: {
+    id: string;
+  };
+}
+
+export async function DELETE(req: NextRequest, context: Context) {
+  const { id } = context.params;
 
   const session = await auth();
   if (!session?.user?.email) {
